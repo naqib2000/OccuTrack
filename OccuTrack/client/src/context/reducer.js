@@ -19,7 +19,7 @@ const reducer = (state, action) => {
                     alertText: ""
                 }
             )};
-    throw new Error(`no such actio : ${action.type}`)
+    throw new Error(`no such action : ${action.type}`)
 };
 
 export default reducer;
