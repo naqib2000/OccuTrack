@@ -11,7 +11,7 @@ const Landing = () => {
       <main>
        <nav>
         {/* change logo to OccuTrack */}
-        {/* <Logo /> */}
+        <Logo />
        </nav>
        <div className="container page">
         <div className="info">
