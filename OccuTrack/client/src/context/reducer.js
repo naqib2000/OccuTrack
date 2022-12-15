@@ -26,6 +26,8 @@ import {
   SHOW_STATS_SUCCESS,
   CLEAR_FILTERS,
   CHANGE_PAGE,
+  GET_CURRENT_USER_BEGIN,
+  GET_CURRENT_USER_SUCCESS,
 } from "./action";
 
 import { initialState } from "./appContext";
@@ -55,7 +57,6 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoading: false,
-      token: action.payload.token,
       user: action.payload.user,
       userLocation: action.payload.location,
       jobLocation: action.payload.location,
@@ -82,10 +83,7 @@ const reducer = (state, action) => {
   if (action.type === LOGOUT_USER) {
     return {
       ...initialState,
-      user: null,
-      token: null,
-      userLocation: "",
-      jobLocation: "",
+      userLoading: false,
     };
   }
   if (action.type === UPDATE_USER_BEGIN) {
@@ -95,7 +93,6 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoading: false,
-      token: action.payload.token,
       user: action.payload.user,
       userLocation: action.payload.location,
       jobLocation: action.payload.location,
@@ -188,19 +185,19 @@ const reducer = (state, action) => {
   }
   if (action.type === DELETE_JOB_ERROR) {
     return {
-      ...state, 
+      ...state,
       isLoading: false,
       showAlert: true,
       alertType: "danger",
       alertText: action.payload.msg,
     };
   }
-    if (action.type === EDIT_JOB_BEGIN) {
-      return {
-        ...state,
-        isLoading: true,
-      };
-    }
+  if (action.type === EDIT_JOB_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
   if (action.type === EDIT_JOB_SUCCESS) {
     return {
       ...state,
@@ -245,6 +242,18 @@ const reducer = (state, action) => {
   }
   if (action.type === CHANGE_PAGE) {
     return { ...state, page: action.payload.page };
+  }
+  if (action.type === GET_CURRENT_USER_BEGIN) {
+    return { ...state, userLoading: true, showAlert: false };
+  }
+  if (action.type === GET_CURRENT_USER_SUCCESS) {
+    return {
+      ...state,
+      userLoading: false,
+      user: action.payload.user,
+      userLocation: action.payload.location,
+      jobLocation: action.payload.location,
+    };
   }
   throw new Error(`no such action : ${action.type}`);
 };
